@@ -60,6 +60,12 @@
       margin: 30px auto;
     }
 
+    .gallery-container div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     .gallery-container img {
       width: 300px;
       height: 200px;
@@ -67,7 +73,7 @@
       border-radius: 20px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
       transition: transform 0.4s ease, opacity 0.6s ease;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       opacity: 0;
     }
 
@@ -127,167 +133,133 @@
 
     .hidden { display: none; }
 
-    .caption { margin-top: 5px; font-size: 0.95rem; color: #555; }
+    .caption { margin-top: 5px; font-size: 0.95rem; color: #555; text-align: center; }
   </style>
 </head>
-
 <body>
-  <!-- Floating Hearts -->
-  <div class="hearts" id="hearts"></div>
 
-  <!-- Page Containers -->
-  <div id="page1" class="page">
-    <h1>Let's go through our journey</h1>
-    <div class="buttons">
-      <button class="yes" onclick="chooseYes()">Yes 💖</button>
-      <button class="no" id="noBtn">No 🙈</button>
+<div class="hearts" id="hearts"></div>
+
+<div id="page1" class="page">
+  <h1>Let's go through our journey</h1>
+  <div class="buttons">
+    <button class="yes" onclick="chooseYes()">Yes 💖</button>
+    <button class="no" id="noBtn">No 🙈</button>
+  </div>
+</div>
+
+<div id="page2" class="page hidden">
+  <div class="story" id="story2"></div>
+  <img src="Promise on the watch.png" alt="Promise on the watch" style="margin-top:20px; width:200px; border-radius:15px;">
+  <div class="buttons">
+    <button onclick="nextPage(3)">Next ➡️</button>
+  </div>
+</div>
+
+<div id="page3" class="page hidden">
+  <div class="story" id="story3"></div>
+  <div class="gallery-container">
+    <div>
+      <img id="galleryImage" src="Joins E.png" alt="Gallery Image">
+      <div class="caption" id="galleryCaption">This boy joined E-Con on June 23, 2025.</div>
+    </div>
+    <div class="gallery-buttons">
+      <button onclick="prevImage()">❮ Prev</button>
+      <button onclick="nextImage()">Next ❯</button>
     </div>
   </div>
-
-  <div id="page2" class="page hidden">
-    <div class="story" id="story2"></div>
-    <img src="Promise on the watch.png" alt="Promise on the watch" style="margin-top:20px; width:200px; border-radius:15px;">
-    <div class="buttons">
-      <button onclick="nextPage(3)">Next ➡️</button>
-    </div>
+  <div class="buttons">
+    <button onclick="nextPage(4)">Next ➡️</button>
   </div>
+</div>
 
-  <div id="page3" class="page hidden">
-    <div class="story" id="story3"></div>
-    <div class="gallery-container">
-      <img id="galleryImage" src="" alt="Gallery Image">
-      <div class="caption" id="galleryCaption"></div>
-      <div class="gallery-buttons">
-        <button onclick="prevImage()">❮ Prev</button>
-        <button onclick="nextImage()">Next ❯</button>
-      </div>
-    </div>
-    <div class="buttons">
-      <button onclick="nextPage(4)">Next ➡️</button>
-    </div>
-  </div>
+<div id="page4" class="page hidden">
+  <div class="story" id="story4"></div>
+  <div class="buttons"><button onclick="nextPage(5)">Next ➡️</button></div>
+</div>
 
-  <div id="page4" class="page hidden">
-    <div class="story" id="story4"></div>
-    <div class="buttons"><button onclick="nextPage(5)">Next ➡️</button></div>
-  </div>
+<div id="page5" class="page hidden">
+  <div class="story" id="story5"></div>
+  <div class="buttons"><button onclick="nextPage(6)">Next ➡️</button></div>
+</div>
 
-  <div class="page hidden" id="page5">
-    <div class="story" id="story5"></div>
-    <div class="buttons"><button onclick="nextPage(6)">Next ➡️</button></div>
-  </div>
+<div id="page6" class="page hidden">
+  <div class="story" id="story6"></div>
+  <div class="buttons"><button onclick="nextPage(7)">Next ➡️</button></div>
+</div>
 
-  <div class="page hidden" id="page6">
-    <div class="story" id="story6"></div>
-    <div class="buttons"><button onclick="nextPage(7)">Next ➡️</button></div>
-  </div>
+<div id="page7" class="page hidden">
+  <div class="story" id="story7"></div>
+</div>
 
-  <div class="page hidden" id="page7">
-    <div class="story" id="story7"></div>
-  </div>
+<script>
+const noBtn = document.getElementById('noBtn');
+const heartsContainer = document.getElementById('hearts');
 
-  <script>
-    const noBtn = document.getElementById('noBtn');
-    const heartsContainer = document.getElementById('hearts');
+const stories = {
+  2: 'We fell for each other on June 14, 2023. We both played on the laptop keyboard together, like a peak romantic scene from a TV show.',
+  3: '2025 gave us more “You & Me” time. Here are some of the precious moments we enjoyed the most.',
+  4: 'Happy Teddy Day 🧸. Just like this teddy, I want to stay close to you — soft in love, strong in care, and always yours.',
+  5: 'Happy Chocolate Day 🍫. Some chocolates melt in your mouth, but your love melts straight into my heart.',
+  6: 'Happy Promise Day 💍. I promise to stand beside you — in calm days and chaotic ones, to choose you even on the hard days, and to love you a little more every single day.',
+  7: '❤️ Happy Valentine’s Day — My Love ❤️. From the moment we fell for each other, to every journey, laugh, and quiet moment in between — you’ve become my favorite part of life.'
+};
 
-    // --- Story texts ---
-    const stories = {
-      2: 'We fell for each other on June 14, 2023. We both played on the laptop keyboard together, like a peak romantic scene from a TV show.',
-      3: '2025 gave us more “You & Me” time. Here are some of the precious moments we enjoyed the most.',
-      4: 'Happy Teddy Day 🧸. Just like this teddy, I want to stay close to you — soft in love, strong in care, and always yours.',
-      5: 'Happy Chocolate Day 🍫. Some chocolates melt in your mouth, but your love melts straight into my heart.',
-      6: 'Happy Promise Day 💍. I promise to stand beside you — in calm days and chaotic ones, to choose you even on the hard days, and to love you a little more every single day.',
-      7: '❤️ Happy Valentine’s Day — My Love ❤️. From the moment we fell for each other, to every journey, laugh, and quiet moment in between — you’ve become my favorite part of life.'
-    };
+const galleryImages = [
+  {src:'Joins E.png', caption:'This boy joined E-Con on June 23, 2025.'},
+  {src:'Tada.png', caption:'We both went to Tada and crossed the Tamil Nadu border on July 26, 2025.'},
+  {src:'mahabaliburam.png', caption:'We went to Mahabalipuram on November 1, 2025.'},
+  {src:'boat.png', caption:'You took me to Muttukaadu Boat House on the same day — November 1, 2025.'},
+  {src:'dumpling momos.png', caption:'We went on a dinner date to Dumpling Momos on November 14, 2025.'},
+  {src:'dakshinchitra.png', caption:'We went to Dakshinchitra on November 29, 2025, a pottery date, just like “செம்புலப் பெயல்நீர்போல அன்புடை நெஞ்சம்தாம் கலந்தனவே”.'}
+];
 
-    // --- IMAGE GALLERY DATA ---
-    const galleryImages = [
-      {src:'Joins E.png', caption:'This boy joined E-Con on June 23, 2025.'},
-      {src:'Tada.png', caption:'We both went to Tada and crossed the Tamil Nadu border on July 26, 2025.'},
-      {src:'mahabaliburam.png', caption:'We went to Mahabalipuram on November 1, 2025.'},
-      {src:'boat.png', caption:'You took me to Muttukaadu Boat House on the same day — November 1, 2025.'},
-      {src:'dumpling momos.png', caption:'We went on a dinner date to Dumpling Momos on November 14, 2025.'},
-      {src:'dakshinchitra.png', caption:'We went to Dakshinchitra on November 29, 2025, a pottery date, just like “செம்புலப் பெயல்நீர்போல அன்புடை நெஞ்சம்தாம் கலந்தனவே”.'}
-    ];
-    let currentIndex = 0;
+let currentIndex = 0;
+const galleryImage = document.getElementById('galleryImage');
+const galleryCaption = document.getElementById('galleryCaption');
 
-    const galleryImage = document.getElementById('galleryImage');
-    const galleryCaption = document.getElementById('galleryCaption');
+function showGalleryImage(index){
+  galleryImage.classList.remove('show');
+  setTimeout(()=>{
+    galleryImage.src = galleryImages[index].src;
+    galleryCaption.innerHTML = galleryImages[index].caption;
+    galleryImage.classList.add('show');
+  },100);
+}
 
-    function showGalleryImage(index){
-      galleryImage.classList.remove('show');
-      setTimeout(()=>{
-        galleryImage.src = galleryImages[index].src;
-        galleryCaption.innerHTML = galleryImages[index].caption;
-        galleryImage.classList.add('show');
-      },100);
-    }
+function nextImage(){
+  currentIndex = (currentIndex + 1) % galleryImages.length;
+  showGalleryImage(currentIndex);
+}
 
-    function nextImage(){
-      currentIndex = (currentIndex + 1) % galleryImages.length;
-      showGalleryImage(currentIndex);
-    }
+function prevImage(){
+  currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+  showGalleryImage(currentIndex);
+}
 
-    function prevImage(){
-      currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
-      showGalleryImage(currentIndex);
-    }
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>{ p.classList.add('hidden'); p.querySelector('.story')?.classList.remove('visible'); });
+  const page = document.getElementById(id);
+  page.classList.remove('hidden');
+  const story = page.querySelector('.story');
+  if(story){ typeText(story, stories[id], 0); }
+  if(id=='page3') showGalleryImage(currentIndex);
+}
 
-    // --- PAGE NAVIGATION ---
-    function showPage(id){
-      document.querySelectorAll('.page').forEach(p=>{ p.classList.add('hidden'); p.querySelector('.story')?.classList.remove('visible'); });
-      const page = document.getElementById(id);
-      page.classList.remove('hidden');
-      const story = page.querySelector('.story');
-      if(story){
-        typeText(story, stories[id], 0);
-      }
-      if(id=='page3') showGalleryImage(currentIndex);
-    }
+function chooseYes(){ alert('You chose the right path ✨'); showPage('page2'); }
+noBtn.addEventListener('mouseover',()=>{ noBtn.style.left=Math.random()*80+'vw'; noBtn.style.top=Math.random()*70+'vh'; alert('Sorry… you don’t really have another option 😌'); });
+function nextPage(num){ showPage('page'+num); }
 
-    function chooseYes(){
-      alert('You chose the right path ✨');
-      showPage('page2');
-    }
+function typeText(element, text, i){
+  element.classList.add('visible');
+  if(i<text.length){ element.innerHTML+=text[i]; setTimeout(()=>typeText(element,text,i+1),30); }
+}
 
-    noBtn.addEventListener('mouseover', () => {
-      noBtn.style.left = Math.random() * 80 + 'vw';
-      noBtn.style.top = Math.random() * 70 + 'vh';
-      alert(`Sorry… you don’t really have another option 😌`);
-    });
+const emojis=['💗','🧸','🍫','🦋','🌸'];
+setInterval(()=>{ const span=document.createElement('span'); span.innerHTML=emojis[Math.floor(Math.random()*emojis.length)]; span.style.left=Math.random()*100+'vw'; span.style.animationDuration=(3+Math.random()*2)+'s'; document.body.appendChild(span); setTimeout(()=>span.remove(),5000); },500);
+setInterval(()=>{ const heart=document.createElement('span'); heart.innerHTML='💗'; heart.style.left=Math.random()*100+'vw'; heart.style.animationDuration=(Math.random()*2+3)+'s'; heartsContainer.appendChild(heart); setTimeout(()=>heart.remove(),5000); },300);
+</script>
 
-    function nextPage(num){ showPage('page'+num); }
-
-    // --- TYPING EFFECT ---
-    function typeText(element, text, i){
-      element.classList.add('visible');
-      if(i<text.length){
-        element.innerHTML += text[i];
-        setTimeout(()=>typeText(element,text,i+1),30);
-      }
-    }
-
-    // --- FLOATING EMOJIS ---
-    const emojis = ['💗','🧸','🍫','🦋','🌸'];
-    setInterval(() => {
-      const span = document.createElement('span');
-      span.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
-      span.style.left = Math.random()*100+'vw';
-      span.style.animationDuration = (3+Math.random()*2)+'s';
-      document.body.appendChild(span);
-      setTimeout(()=>span.remove(),5000);
-    },500);
-
-    // --- FLOATING HEARTS ---
-    setInterval(() => {
-      const heart = document.createElement('span');
-      heart.innerHTML = '💗';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
-      heartsContainer.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
-    }, 300);
-  </script>
 </body>
 </html>
 
