@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
+    /* --- BODY AND BACKGROUND --- */
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
@@ -18,12 +19,13 @@
       animation: bg 10s ease infinite;
       overflow-x: hidden;
       transition: all 0.5s ease;
+
+      /* Center all page content */
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       text-align: center;
-      position: relative;
     }
 
     @keyframes bg {
@@ -47,23 +49,14 @@
       max-width: 700px;
       font-size: 1.2rem;
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      opacity: 0;
-      transition: opacity 1s ease;
     }
 
-    .visible { opacity: 1 !important; }
-
+    /* --- GALLERY STYLING --- */
     .gallery-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin: 30px auto;
-    }
-
-    .gallery-container div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
 
     .gallery-container img {
@@ -72,14 +65,8 @@
       object-fit: cover;
       border-radius: 20px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-      transition: transform 0.4s ease, opacity 0.6s ease;
-      margin-bottom: 10px;
-      opacity: 0;
-    }
-
-    .gallery-container img.show {
-      opacity: 1;
-      transform: scale(1.05);
+      transition: transform 0.4s ease;
+      margin-bottom: 15px;
     }
 
     .gallery-buttons {
@@ -98,6 +85,7 @@
       font-size: 1rem;
     }
 
+    /* --- BUTTONS --- */
     .buttons {
       margin: 30px 0;
       position: relative;
@@ -111,15 +99,13 @@
       border-radius: 50px;
       cursor: pointer;
       margin: 10px;
-      transition: transform 0.2s;
     }
-
-    button:hover { transform: scale(1.1); }
 
     .yes { background: #ff4d6d; color: white; }
     .no { background: #aaa; color: white; position: absolute; }
 
-    .hearts span, .floating span {
+    /* --- HEARTS --- */
+    .hearts span {
       position: fixed;
       bottom: -20px;
       font-size: 20px;
@@ -133,133 +119,145 @@
 
     .hidden { display: none; }
 
-    .caption { margin-top: 5px; font-size: 0.95rem; color: #555; text-align: center; }
+    .caption { margin-top: 5px; font-size: 0.95rem; color: #555; }
   </style>
 </head>
+
 <body>
+  <!-- Floating Hearts -->
+  <div class="hearts" id="hearts"></div>
 
-<div class="hearts" id="hearts"></div>
-
-<div id="page1" class="page">
-  <h1>Let's go through our journey</h1>
-  <div class="buttons">
-    <button class="yes" onclick="chooseYes()">Yes 💖</button>
-    <button class="no" id="noBtn">No 🙈</button>
+  <!-- Page Containers -->
+  <div id="page1" class="page">
+    <h1>Let's go through our journey</h1>
+    <div class="buttons">
+      <button class="yes" onclick="chooseYes()">Yes 💖</button>
+      <button class="no" id="noBtn">No 🙈</button>
+    </div>
   </div>
-</div>
 
-<div id="page2" class="page hidden">
-  <div class="story" id="story2"></div>
-  <img src="Promise on the watch.png" alt="Promise on the watch" style="margin-top:20px; width:200px; border-radius:15px;">
-  <div class="buttons">
-    <button onclick="nextPage(3)">Next ➡️</button>
+  <div id="page2" class="page hidden">
+    <div class="story">
+      <b>We fell for each other on June 14, 2023.</b><br>
+      We both played on the laptop keyboard together, like a peak romantic scene from a TV show.
+    </div>
+    <img src="Promise on the watch.png" alt="Promise on the watch" style="margin-top:20px; width:200px; border-radius:15px;">
+    <div class="buttons">
+      <button onclick="nextPage(3)">Next ➡️</button>
+    </div>
   </div>
-</div>
 
-<div id="page3" class="page hidden">
-  <div class="story" id="story3"></div>
-  <div class="gallery-container">
-    <div>
+  <div id="page3" class="page hidden">
+    <div class="story">
+      <b>2025 gave us more ‘You & Me’ time.</b><br>
+      Here are some of the precious moments we enjoyed the most.
+    </div>
+
+    <!-- SINGLE IMAGE GALLERY -->
+    <div class="gallery-container">
       <img id="galleryImage" src="Joins E.png" alt="Gallery Image">
       <div class="caption" id="galleryCaption">This boy joined E-Con on June 23, 2025.</div>
+      <div class="gallery-buttons">
+        <button onclick="prevImage()">❮ Prev</button>
+        <button onclick="nextImage()">Next ❯</button>
+      </div>
     </div>
-    <div class="gallery-buttons">
-      <button onclick="prevImage()">❮ Prev</button>
-      <button onclick="nextImage()">Next ❯</button>
+
+    <div class="buttons">
+      <button onclick="nextPage(4)">Next ➡️</button>
     </div>
   </div>
-  <div class="buttons">
-    <button onclick="nextPage(4)">Next ➡️</button>
+
+  <div id="page4" class="page hidden">
+    <div class="story"><b>Happy Teddy Day 🧸</b><br>
+      Just like this teddy, I want to stay close to you — soft in love, strong in care, and always yours. No matter how big the world gets, I’ll always be the one you can hug when life feels heavy.
+    </div>
+    <div class="buttons"><button onclick="nextPage(5)">Next ➡️</button></div>
   </div>
-</div>
 
-<div id="page4" class="page hidden">
-  <div class="story" id="story4"></div>
-  <div class="buttons"><button onclick="nextPage(5)">Next ➡️</button></div>
-</div>
+  <div id="page5" class="page hidden">
+    <div class="story"><b>Happy Chocolate Day 🍫</b><br>
+      Some chocolates melt in your mouth, but your love melts straight into my heart. Every sweet moment with you feels richer, warmer, and impossible to forget — just like our story.
+    </div>
+    <div class="buttons"><button onclick="nextPage(6)">Next ➡️</button></div>
+  </div>
 
-<div id="page5" class="page hidden">
-  <div class="story" id="story5"></div>
-  <div class="buttons"><button onclick="nextPage(6)">Next ➡️</button></div>
-</div>
+  <div id="page6" class="page hidden">
+    <div class="story"><b>Happy Promise Day 💍</b><br>
+      I promise to stand beside you — in calm days and chaotic ones, to choose you even on the hard days, and to love you a little more every single day. Not just today… but always.
+    </div>
+    <div class="buttons"><button onclick="nextPage(7)">Next ➡️</button></div>
+  </div>
 
-<div id="page6" class="page hidden">
-  <div class="story" id="story6"></div>
-  <div class="buttons"><button onclick="nextPage(7)">Next ➡️</button></div>
-</div>
+  <div id="page7" class="page hidden">
+    <div class="story"><b>❤️ Happy Valentine’s Day — My Love ❤️</b><br>
+      Happy Valentine’s Day, my love. From the moment we fell for each other, to every journey, laugh, and quiet moment in between — you’ve become my favorite part of life.<br><br>
+      This isn’t just a website. It’s our memories, our time, our love — wrapped in moments that I’ll cherish forever.<br><br>
+      Thank you for choosing me. Thank you for being you. Today, tomorrow, and always — it’s you & me.
+    </div>
+  </div>
 
-<div id="page7" class="page hidden">
-  <div class="story" id="story7"></div>
-</div>
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const heartsContainer = document.getElementById('hearts');
 
-<script>
-const noBtn = document.getElementById('noBtn');
-const heartsContainer = document.getElementById('hearts');
+    // IMAGE GALLERY DATA
+    const galleryImages = [
+      {src:'Joins E.png', caption:'This boy joined E-Con on June 23, 2025.'},
+      {src:'Tada.png', caption:'We both went to Tada and crossed the Tamil Nadu border on July 26, 2025.'},
+      {src:'mahabaliburam.png', caption:'We went to Mahabalipuram on November 1, 2025.'},
+      {src:'boat.png', caption:'You took me to Muttukaadu Boat House on the same day — November 1, 2025.'},
+      {src:'dumpling momos.png', caption:'We went on a dinner date to Dumpling Momos on November 14, 2025.'},
+      {src:'dakshinchitra.png', caption:'We went to Dakshinchitra on November 29, 2025, a pottery date, just like “செம்புலப் பெயல்நீர்போல அன்புடை நெஞ்சம்தாம் கலந்தனவே”.'}
+    ];
+    let currentIndex = 0;
 
-const stories = {
-  2: 'We fell for each other on June 14, 2023. We both played on the laptop keyboard together, like a peak romantic scene from a TV show.',
-  3: '2025 gave us more “You & Me” time. Here are some of the precious moments we enjoyed the most.',
-  4: 'Happy Teddy Day 🧸. Just like this teddy, I want to stay close to you — soft in love, strong in care, and always yours.',
-  5: 'Happy Chocolate Day 🍫. Some chocolates melt in your mouth, but your love melts straight into my heart.',
-  6: 'Happy Promise Day 💍. I promise to stand beside you — in calm days and chaotic ones, to choose you even on the hard days, and to love you a little more every single day.',
-  7: '❤️ Happy Valentine’s Day — My Love ❤️. From the moment we fell for each other, to every journey, laugh, and quiet moment in between — you’ve become my favorite part of life.'
-};
+    const galleryImage = document.getElementById('galleryImage');
+    const galleryCaption = document.getElementById('galleryCaption');
 
-const galleryImages = [
-  {src:'Joins E.png', caption:'This boy joined E-Con on June 23, 2025.'},
-  {src:'Tada.png', caption:'We both went to Tada and crossed the Tamil Nadu border on July 26, 2025.'},
-  {src:'mahabaliburam.png', caption:'We went to Mahabalipuram on November 1, 2025.'},
-  {src:'boat.png', caption:'You took me to Muttukaadu Boat House on the same day — November 1, 2025.'},
-  {src:'dumpling momos.png', caption:'We went on a dinner date to Dumpling Momos on November 14, 2025.'},
-  {src:'dakshinchitra.png', caption:'We went to Dakshinchitra on November 29, 2025, a pottery date, just like “செம்புலப் பெயல்நீர்போல அன்புடை நெஞ்சம்தாம் கலந்தனவே”.'}
-];
+    function showGalleryImage(index){
+      galleryImage.src = galleryImages[index].src;
+      galleryCaption.innerHTML = galleryImages[index].caption;
+    }
 
-let currentIndex = 0;
-const galleryImage = document.getElementById('galleryImage');
-const galleryCaption = document.getElementById('galleryCaption');
+    function nextImage(){
+      currentIndex = (currentIndex + 1) % galleryImages.length;
+      showGalleryImage(currentIndex);
+    }
 
-function showGalleryImage(index){
-  galleryImage.classList.remove('show');
-  setTimeout(()=>{
-    galleryImage.src = galleryImages[index].src;
-    galleryCaption.innerHTML = galleryImages[index].caption;
-    galleryImage.classList.add('show');
-  },100);
-}
+    function prevImage(){
+      currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+      showGalleryImage(currentIndex);
+    }
 
-function nextImage(){
-  currentIndex = (currentIndex + 1) % galleryImages.length;
-  showGalleryImage(currentIndex);
-}
+    // PAGE NAVIGATION
+    function showPage(id){
+      document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
 
-function prevImage(){
-  currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
-  showGalleryImage(currentIndex);
-}
+    function chooseYes(){
+      alert('You chose the right path ✨');
+      showPage('page2');
+    }
 
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>{ p.classList.add('hidden'); p.querySelector('.story')?.classList.remove('visible'); });
-  const page = document.getElementById(id);
-  page.classList.remove('hidden');
-  const story = page.querySelector('.story');
-  if(story){ typeText(story, stories[id], 0); }
-  if(id=='page3') showGalleryImage(currentIndex);
-}
+    noBtn.addEventListener('mouseover', () => {
+      alert(`Sorry… you don’t really have another option 😌\nYou’d have to time-travel and reject her on June 14, 2023.\nBut let’s be honest… you clearly enjoyed her hand on your laptop keyboard, huh?`);
+    });
 
-function chooseYes(){ alert('You chose the right path ✨'); showPage('page2'); }
-noBtn.addEventListener('mouseover',()=>{ noBtn.style.left=Math.random()*80+'vw'; noBtn.style.top=Math.random()*70+'vh'; alert('Sorry… you don’t really have another option 😌'); });
-function nextPage(num){ showPage('page'+num); }
+    function nextPage(num){
+      showPage('page' + num);
+    }
 
-function typeText(element, text, i){
-  element.classList.add('visible');
-  if(i<text.length){ element.innerHTML+=text[i]; setTimeout(()=>typeText(element,text,i+1),30); }
-}
-
-const emojis=['💗','🧸','🍫','🦋','🌸'];
-setInterval(()=>{ const span=document.createElement('span'); span.innerHTML=emojis[Math.floor(Math.random()*emojis.length)]; span.style.left=Math.random()*100+'vw'; span.style.animationDuration=(3+Math.random()*2)+'s'; document.body.appendChild(span); setTimeout(()=>span.remove(),5000); },500);
-setInterval(()=>{ const heart=document.createElement('span'); heart.innerHTML='💗'; heart.style.left=Math.random()*100+'vw'; heart.style.animationDuration=(Math.random()*2+3)+'s'; heartsContainer.appendChild(heart); setTimeout(()=>heart.remove(),5000); },300);
-</script>
-
+    // FLOATING HEARTS
+    setInterval(() => {
+      const heart = document.createElement('span');
+      heart.innerHTML = '💗';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }, 300);
+  </script>
 </body>
 </html>
-
