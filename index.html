@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
+    /* --- BODY AND BACKGROUND --- */
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
@@ -17,8 +18,14 @@
       background-size: 400% 400%;
       animation: bg 10s ease infinite;
       overflow-x: hidden;
-      text-align: center;
       transition: all 0.5s ease;
+
+      /* Center all page content */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
     }
 
     @keyframes bg {
@@ -31,7 +38,7 @@
       font-family: 'Pacifico', cursive;
       color: #ff4d6d;
       font-size: 2.5rem;
-      margin-top: 40px;
+      margin: 0;
     }
 
     .story {
@@ -44,29 +51,43 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
-    .gallery {
+    /* --- GALLERY STYLING --- */
+    .gallery-container {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin: 30px;
+      flex-direction: column;
+      align-items: center;
+      margin: 30px auto;
     }
 
-    .gallery img {
-      width: 160px;
-      height: 120px;
+    .gallery-container img {
+      width: 300px;
+      height: 200px;
       object-fit: cover;
       border-radius: 20px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
       transition: transform 0.4s ease;
+      margin-bottom: 15px;
     }
 
-    .gallery img:hover {
-      transform: scale(1.2) rotate(3deg);
+    .gallery-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
     }
 
+    .gallery-buttons button {
+      padding: 10px 20px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      background-color: #ff4d6d;
+      color: white;
+      font-size: 1rem;
+    }
+
+    /* --- BUTTONS --- */
     .buttons {
-      margin: 40px 0;
+      margin: 30px 0;
       position: relative;
       height: 120px;
     }
@@ -83,6 +104,7 @@
     .yes { background: #ff4d6d; color: white; }
     .no { background: #aaa; color: white; position: absolute; }
 
+    /* --- HEARTS --- */
     .hearts span {
       position: fixed;
       bottom: -20px;
@@ -130,26 +152,17 @@
       <b>2025 gave us more ‘You & Me’ time.</b><br>
       Here are some of the precious moments we enjoyed the most.
     </div>
-    <div class="gallery">
-      <div>
-        <img src="Joins E.png" alt="Joins E"><div class="caption">This boy joined E-Con on June 23, 2025.</div>
-      </div>
-      <div>
-        <img src="Tada.png" alt="Tada"><div class="caption">We both went to Tada and crossed the Tamil Nadu border on July 26, 2025.</div>
-      </div>
-      <div>
-        <img src="mahabaliburam.png" alt="Mahabalipuram"><div class="caption">We went to Mahabalipuram on November 1, 2025.</div>
-      </div>
-      <div>
-        <img src="boat.png" alt="Boat"><div class="caption">You took me to Muttukaadu Boat House on the same day — November 1, 2025.</div>
-      </div>
-      <div>
-        <img src="dumpling momos.png" alt="Dumpling Momos"><div class="caption">We went on a dinner date to Dumpling Momos on November 14, 2025.</div>
-      </div>
-      <div>
-        <img src="dakshinchitra.png" alt="Dakshinchitra"><div class="caption">We went to Dakshinchitra on November 29, 2025, <br> a pottery date, just like <br>‘செம்புலப் பெயல்நீர்போல அன்புடை நெஞ்சம்தாம் கலந்தனவே’.<br></div>
+
+    <!-- SINGLE IMAGE GALLERY -->
+    <div class="gallery-container">
+      <img id="galleryImage" src="Joins E.png" alt="Gallery Image">
+      <div class="caption" id="galleryCaption">This boy joined E-Con on June 23, 2025.</div>
+      <div class="gallery-buttons">
+        <button onclick="prevImage()">❮ Prev</button>
+        <button onclick="nextImage()">Next ❯</button>
       </div>
     </div>
+
     <div class="buttons">
       <button onclick="nextPage(4)">Next ➡️</button>
     </div>
@@ -188,12 +201,42 @@
     const noBtn = document.getElementById('noBtn');
     const heartsContainer = document.getElementById('hearts');
 
-    function showPage(id) {
+    // IMAGE GALLERY DATA
+    const galleryImages = [
+      {src:'Joins E.png', caption:'This boy joined E-Con on June 23, 2025.'},
+      {src:'Tada.png', caption:'We both went to Tada and crossed the Tamil Nadu border on July 26, 2025.'},
+      {src:'mahabaliburam.png', caption:'We went to Mahabalipuram on November 1, 2025.'},
+      {src:'boat.png', caption:'You took me to Muttukaadu Boat House on the same day — November 1, 2025.'},
+      {src:'dumpling momos.png', caption:'We went on a dinner date to Dumpling Momos on November 14, 2025.'},
+      {src:'dakshinchitra.png', caption:'We went to Dakshinchitra on November 29, 2025, a pottery date, just like “செம்புலப் பெயல்நீர்போல அன்புடை நெஞ்சம்தாம் கலந்தனவே”.'}
+    ];
+    let currentIndex = 0;
+
+    const galleryImage = document.getElementById('galleryImage');
+    const galleryCaption = document.getElementById('galleryCaption');
+
+    function showGalleryImage(index){
+      galleryImage.src = galleryImages[index].src;
+      galleryCaption.innerHTML = galleryImages[index].caption;
+    }
+
+    function nextImage(){
+      currentIndex = (currentIndex + 1) % galleryImages.length;
+      showGalleryImage(currentIndex);
+    }
+
+    function prevImage(){
+      currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+      showGalleryImage(currentIndex);
+    }
+
+    // PAGE NAVIGATION
+    function showPage(id){
       document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
       document.getElementById(id).classList.remove('hidden');
     }
 
-    function chooseYes() {
+    function chooseYes(){
       alert('You chose the right path ✨');
       showPage('page2');
     }
@@ -202,10 +245,11 @@
       alert(`Sorry… you don’t really have another option 😌\nYou’d have to time-travel and reject her on June 14, 2023.\nBut let’s be honest… you clearly enjoyed her hand on your laptop keyboard, huh?`);
     });
 
-    function nextPage(num) {
+    function nextPage(num){
       showPage('page' + num);
     }
 
+    // FLOATING HEARTS
     setInterval(() => {
       const heart = document.createElement('span');
       heart.innerHTML = '💗';
@@ -217,3 +261,4 @@
   </script>
 </body>
 </html>
+
