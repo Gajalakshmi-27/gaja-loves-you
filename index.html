@@ -1,163 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>For Dukkul</title>
+  <meta charset="UTF-8">
+  <title>Our Love Story 💕</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #2b2b45);
-      color: #ffffff;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(-45deg, #ffb6c1, #ffd1dc, #c1f0f6, #fff1c1);
+      background-size: 400% 400%;
+      animation: bg 10s ease infinite;
+      overflow-x: hidden;
+      text-align: center;
+      transition: all 0.5s ease;
     }
 
-    .card {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 35px;
-      border-radius: 25px;
-      width: 340px;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-      backdrop-filter: blur(10px);
-      animation: fadeIn 1s ease;
+    @keyframes bg {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     h1 {
-      color: #ff8fa3;
-      margin-bottom: 15px;
+      font-family: 'Pacifico', cursive;
+      color: #ff4d6d;
+      font-size: 2.5rem;
+      margin-top: 40px;
     }
 
-    p {
-      font-size: 15px;
-      line-height: 1.6;
-      margin: 0;
+    .story {
+      background: rgba(255,255,255,0.85);
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 20px;
+      max-width: 700px;
+      font-size: 1.2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin: 30px;
+    }
+
+    .gallery img {
+      width: 160px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      transition: transform 0.4s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.2) rotate(3deg);
+    }
+
+    .buttons {
+      margin: 40px 0;
+      position: relative;
+      height: 120px;
     }
 
     button {
-      margin-top: 25px;
       padding: 12px 28px;
-      font-size: 15px;
-      border-radius: 30px;
+      font-size: 1.2rem;
       border: none;
+      border-radius: 50px;
       cursor: pointer;
-      background: #ff4d6d;
-      color: #fff;
+      margin: 10px;
     }
 
-    button:hover {
-      opacity: 0.9;
+    .yes { background: #ff4d6d; color: white; }
+    .no { background: #aaa; color: white; position: absolute; }
+
+    .hearts span {
+      position: fixed;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 5s linear infinite;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100vh); opacity: 0; }
     }
+
+    .hidden { display: none; }
+
+    .caption { margin-top: 5px; font-size: 0.95rem; color: #555; }
   </style>
 </head>
+
 <body>
+  <!-- Floating Hearts -->
+  <div class="hearts" id="hearts"></div>
 
-<div class="card" id="card">
-  <h1>Hey Dukkul</h1>
-  <p>
-    You said no to the rose.<br>
-    That’s okay.<br><br>
-    This is just what I wanted to give you.
-  </p>
-  <button onclick="next()">Continue</button>
-</div>
+  <!-- Page Containers -->
+  <div id="page1" class="page">
+    <h1>Let's go through our journey</h1>
+    <div class="buttons">
+      <button class="yes" onclick="chooseYes()">Yes 💖</button>
+      <button class="no" id="noBtn">No 🙈</button>
+    </div>
+  </div>
 
-<script>
-  let step = 0;
+  <div id="page2" class="page hidden">
+    <div class="story">
+      <b>We fell for each other on June 14, 2023.</b><br>
+      We both played on the laptop keyboard together, like a peak romantic scene from a TV show.
+    </div>
+    <img src="Promise on the watch.png" alt="Promise on the watch" style="margin-top:20px; width:200px; border-radius:15px;">
+    <div class="buttons">
+      <button onclick="nextPage(3)">Next ➡️</button>
+    </div>
+  </div>
 
-  const pages = [
-    {
-      title: "Rose Day 🌹",
-      text: `
-        I wanted to give you a rose.<br>
-        Not to expect anything.<br>
-        Just because you crossed my mind.
-      `
-    },
-    {
-      title: "Chocolate Day 🍫",
-      text: `
-        Something sweet,<br>
-        because moments with you<br>
-        felt that way to me.
-      `
-    },
-    {
-      title: "Teddy Day 🧸",
-      text: `
-        For comfort.<br>
-        For warmth.<br>
-        For days when words feel heavy.
-      `
-    },
-    {
-      title: "Promise Day 🤍",
-      text: `
-        No big promises.<br>
-        Just honesty,<br>
-        respect,<br>
-        and space.
-      `
-    },
-    {
-      title: "Valentine’s Day",
-      text: `
-        This isn’t a question.<br><br>
-        Just a feeling I had.<br>
-        And feelings are okay.
-      `
-    },
-    {
-      title: "Gratitude",
-      text: `
-        You introduced me to VS Code and GitHub.<br><br>
-        The confidence I carry today exists because of you.<br><br>
-        When I was jobless,<br>
-        when home felt harsh,<br>
-        you waited for me.<br><br>
-        I remember you showing up on Google Meet,<br>
-        patiently teaching me Flutter,<br>
-        giving your time and your heart.<br><br>
-        I don’t forget things like that.<br>
-        I won’t forget you for that.
-      `
-    },
-    {
-      title: "That’s all.",
-      text: `
-        You don’t have to reply.<br>
-        You don’t have to feel the same.<br><br>
-        I just wanted you to know.
-      `
+  <div id="page3" class="page hidden">
+    <div class="story">
+      <b>2025 gave us more ‘You & Me’ time.</b><br>
+      Here are some of the precious moments we enjoyed the most.
+    </div>
+    <div class="gallery">
+      <div>
+        <img src="Joins E.jpg" alt="Joins E"><div class="caption">This boy joined E-Con on June 23, 2025.</div>
+      </div>
+      <div>
+        <img src="Tada.jpg" alt="Tada"><div class="caption">We both went to Tada and crossed the Tamil Nadu border on July 26, 2025.</div>
+      </div>
+      <div>
+        <img src="mahabaliburam.jpg" alt="Mahabalipuram"><div class="caption">We went to Mahabalipuram on November 1, 2025.</div>
+      </div>
+      <div>
+        <img src="boat.jpg" alt="Boat"><div class="caption">You took me to Muttukaadu Boat House on the same day — November 1, 2025.</div>
+      </div>
+      <div>
+        <img src="dumpling momos.jpg" alt="Dumpling Momos"><div class="caption">We went on a dinner date to Dumpling Momos on November 14, 2025.</div>
+      </div>
+      <div>
+        <img src="dakshinchitra.jpg" alt="Dakshinchitra"><div class="caption">We went to Dakshinchitra on November 29, 2025 — a pottery date, just like ‘செம்புலப் பெயல்நீர்போல அன்புடை நெஞ்சம்தாம் கலந்தனவே’.</div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button onclick="nextPage(4)">Next ➡️</button>
+    </div>
+  </div>
+
+  <div id="page4" class="page hidden">
+    <div class="story"><b>Happy Teddy Day 🧸</b><br>
+      Just like this teddy, I want to stay close to you — soft in love, strong in care, and always yours. No matter how big the world gets, I’ll always be the one you can hug when life feels heavy.
+    </div>
+    <div class="buttons"><button onclick="nextPage(5)">Next ➡️</button></div>
+  </div>
+
+  <div id="page5" class="page hidden">
+    <div class="story"><b>Happy Chocolate Day 🍫</b><br>
+      Some chocolates melt in your mouth, but your love melts straight into my heart. Every sweet moment with you feels richer, warmer, and impossible to forget — just like our story.
+    </div>
+    <div class="buttons"><button onclick="nextPage(6)">Next ➡️</button></div>
+  </div>
+
+  <div id="page6" class="page hidden">
+    <div class="story"><b>Happy Promise Day 💍</b><br>
+      I promise to stand beside you — in calm days and chaotic ones, to choose you even on the hard days, and to love you a little more every single day. Not just today… but always.
+    </div>
+    <div class="buttons"><button onclick="nextPage(7)">Next ➡️</button></div>
+  </div>
+
+  <div id="page7" class="page hidden">
+    <div class="story"><b>❤️ Happy Valentine’s Day — My Love ❤️</b><br>
+      Happy Valentine’s Day, my love. From the moment we fell for each other, to every journey, laugh, and quiet moment in between — you’ve become my favorite part of life.<br><br>
+      This isn’t just a website. It’s our memories, our time, our love — wrapped in moments that I’ll cherish forever.<br><br>
+      Thank you for choosing me. Thank you for being you. Today, tomorrow, and always — it’s you & me.
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const heartsContainer = document.getElementById('hearts');
+
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
     }
-  ];
 
-  function next() {
-    if (step < pages.length) {
-      const p = pages[step];
-      document.getElementById("card").innerHTML = `
-        <h1>${p.title}</h1>
-        <p>${p.text}</p>
-        ${step < pages.length - 1 ? '<button onclick="next()">Next</button>' : ''}
-      `;
-      step++;
+    function chooseYes() {
+      alert('You chose the right path ✨');
+      showPage('page2');
     }
-  }
-</script>
 
+    noBtn.addEventListener('mouseover', () => {
+      alert(`Sorry… you don’t really have another option 😌\nYou’d have to time-travel and reject her on June 14, 2023.\nBut let’s be honest… you clearly enjoyed her hand on your laptop keyboard, huh?`);
+    });
+
+    function nextPage(num) {
+      showPage('page' + num);
+    }
+
+    setInterval(() => {
+      const heart = document.createElement('span');
+      heart.innerHTML = '💗';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }, 300);
+  </script>
 </body>
 </html>
